@@ -2,16 +2,16 @@
 This web server application  is targeted for mainly big supermarkets and particularly aims at automation of various management procedures such as managing sales and purchases, stock details, etc. All the details and records in the supermarket are maintained in PostgresSQL database.
 
 ## Main functionalities
-- It reduces the time and manpower required for management and maintenance of different tasks
-- It reduces the paper work in existing system, hence it is economical and efficient.
-- ith this system, customers get quality of service; customers can even give feedback which can be stored in the database.
-- As the entire system is fully computerized, records of daily and monthly purchases and sales can be recorded and analyzed.
-- Made to be secure, user-friendly, and reliable.
+- Reduce the time and manpower required for management and maintenance of different tasks;
+- Reduce the paper work in existing system, hence it is economical and efficient;
+- The system reduces much of human efforts in calculating bill especially for huge products;
+- As the entire system is fully computerized, records of daily and monthly purchases and sales can be recorded and analyzed;
+- Designed to be secure, flexible, user-friendly and reliable.
 
 ## Modules Overview
 - **Administrative module:** This module is handled by an admin who has full control over the system. Admin is required to log in to the system with a unique user id and password. They have control over all the modules and features of the system. Admin can allocate unique user id (username and password) to the employees and staffs.
 - **Employee module:** Employee can use this module with their user id. They can keep track of items in the supermarket, and are responsible for recording details of purchases and sales.
-Purchase module: This module stores all the purchase details of the supermarket.
+- **Purchase module:** This module stores all the purchase details of the supermarket.
 - **Sales module:** This module stores all the sales details of the supermarket.
 - **Billing module:** With the help of this module, all the payment details based on purchases and sales can be shown.
 ## Project status
