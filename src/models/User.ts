@@ -1,9 +1,10 @@
 import db from '../database/connection';
 import { Model, DataTypes, UUIDV4 } from 'sequelize';
+import bcrypt from 'bcrypt';
 
-class Employee extends Model {}
+class User extends Model {}
 
-Employee.init(
+User.init(
 	{
 		first_name: {
 			type: DataTypes.STRING({ length: 50 }),
@@ -20,6 +21,14 @@ Employee.init(
 			validate: {
 				isEmail: true,
 			},
+		},
+		user_name: {
+			type: DataTypes.STRING({ length: 50 }),
+			unique: true,
+			allowNull: false,
+		},
+		password: {
+			type: DataTypes.STRING({ length: 1500 }),
 		},
 		phone: {
 			type: DataTypes.STRING({ length: 30 }),
@@ -57,13 +66,24 @@ Employee.init(
 	},
 	{
 		sequelize: db,
-		tableName: 'Employee',
-		modelName: 'Employee',
+		tableName: 'User',
+		modelName: 'User',
 		timestamps: true,
 	}
 );
 
-// creates the table
-// Employee.sync({ force: true });
+// hooks
+// hashes the password before creating a user
+User.beforeCreate(async (user: any) => {
+	try {
+		const hashedPassword = await bcrypt.hash(user.password, 10);
+		user.password = hashedPassword;
+	} catch (err) {
+		console.log(err);
+	}
+});
 
-export { Employee };
+// creates the table
+User.sync({ force: true });
+
+export { User };
