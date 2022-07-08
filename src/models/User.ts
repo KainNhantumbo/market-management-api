@@ -28,7 +28,7 @@ User.init(
 			allowNull: false,
 		},
 		password: {
-			type: DataTypes.STRING({ length: 1500 }),
+			type: DataTypes.TEXT,
 		},
 		phone: {
 			type: DataTypes.STRING({ length: 30 }),
