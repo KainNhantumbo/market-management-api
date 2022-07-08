@@ -2,19 +2,18 @@ import { Model, DataTypes, UUIDV4 } from 'sequelize/types';
 import db from '../database/connection';
 
 class PurchaseReport extends Model {}
-
 PurchaseReport.init(
 	{
-		product_name: {
+		name: {
 			type: DataTypes.STRING({ length: 250 }),
 			allowNull: false,
 		},
-		product_type: {
+		type: {
 			type: DataTypes.STRING({ length: 150 }),
 			allowNull: false,
 		},
-		amount: {
-			type: DataTypes.FLOAT({ length: 20 }),
+		quantity: {
+			type: DataTypes.INTEGER({ length: 20 }),
 			allowNull: false,
 		},
 		price: {
