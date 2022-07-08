@@ -1,6 +1,7 @@
 import express, { Application, Response, Request } from 'express';
 import { config } from 'dotenv';
 import db from './database/connection';
+import { router as employeesRoutes } from './routes/employees';
 
 // loads environment variables
 config();
@@ -11,6 +12,9 @@ const PORT = process.env.PORT;
 app.get('/', (req: Request, res: Response) => {
 	res.json({ name: 'tar' });
 });
+
+app.use(express.json())
+app.use('/api/v1/employees', employeesRoutes);
 
 // starts the server instance
 const startServer = async () => {
