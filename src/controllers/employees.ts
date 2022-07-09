@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 export default class EmployeesController {
 	async getAllEmployees(req: Request, res: Response): Promise<void> {
 		try {
-			const employees = await Employee.findAll();
+			const employees = await Employee.findAll({});
 			res.status(200).json({ results: employees.length, data: employees });
 		} catch (err) {
 			res.status(500).json({ err });

@@ -23,6 +23,19 @@ export default class ProductsController {
 
 	async getProduct(req: Request, res: Response): Promise<void> {
 		try {
+			const product_id = Number(req.params.id);
+			if (!product_id) {
+				res.status(400).json({ message: 'Provided product id is invalid.' });
+				return;
+			}
+			const product = await Product.findOne({ where: { id: product_id } });
+			if (!product) {
+				res
+					.status(404)
+					.json({ message: `Product with ${product_id} not found.` });
+				return;
+			}
+			res.status(200).json({ data: product });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
