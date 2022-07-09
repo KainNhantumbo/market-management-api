@@ -51,7 +51,7 @@ export default class EmployeesController {
 			const updatedData = req.body;
 			const employee_id = Number(req.params.id);
 			if (!employee_id) {
-				res.status(400).json({ message: 'Provided ID is invalid.' });
+				res.status(400).json({ message: 'Provided employee ID is invalid.' });
 				return;
 			} else if (!updatedData) {
 				res

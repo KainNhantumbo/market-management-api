@@ -60,7 +60,7 @@ export default class ProductsController {
 			const product_id = Number(req.params.id);
 			const updatedProduct = req.body;
 			if (!product_id) {
-				res.status(400).json({ message: 'Provided product id is invalid.' });
+				res.status(400).json({ message: 'Provided product ID is invalid.' });
 				return;
 			} else if (!updatedProduct) {
 				res
@@ -80,6 +80,13 @@ export default class ProductsController {
 
 	async deleteProduct(req: Request, res: Response): Promise<void> {
 		try {
+			const product_id = Number(req.params.id);
+			if (!product_id) {
+				res.status(400).json({ message: 'Provided product ID is invalid.' });
+				return;
+			}
+			await Product.destroy({ where: { id: product_id } });
+			res.status(200).json({ message: 'Product data deleted successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
