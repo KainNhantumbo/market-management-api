@@ -12,4 +12,4 @@ router
 	.patch(controller.updateProduct)
 	.delete(controller.deleteProduct);
 
-export { router };
+export { router as productsRoutes };

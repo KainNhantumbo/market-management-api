@@ -15,4 +15,4 @@ router
 	.patch(controller.updateEmployee)
 	.delete(controller.deleteEmployee);
 
-export { router };
+export { router as employeesRoutes };

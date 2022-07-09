@@ -1,4 +1,4 @@
-import { Model, DataTypes, UUIDV4 } from 'sequelize/types';
+import { Model, DataTypes, UUIDV4 } from 'sequelize';
 import db from '../database/connection';
 
 class Product extends Model {}
@@ -29,15 +29,15 @@ Product.init(
 			allowNull: true,
 		},
 		quantity: {
-			type: DataTypes.INTEGER({ length: 20 }),
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 		lot: {
-			type: DataTypes.INTEGER({ length: 20 }),
+			type: DataTypes.INTEGER,
 			allowNull: true,
 		},
 		reference_id: {
-			type: DataTypes.UUIDV4,
+			type: DataTypes.UUID,
 			defaultValue: UUIDV4,
 			allowNull: false,
 		},
@@ -50,5 +50,5 @@ Product.init(
 	}
 );
 // creates the table
-Product.sync({ force: true });
+// Product.sync({ force: true });
 export { Product };
