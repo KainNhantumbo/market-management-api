@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { config } from 'dotenv';
 import db from './database/connection';
 import { router as employeesRoutes } from './routes/employees';
+import { router as productRoutes } from './routes/products';
 
 // loads environment variables
 config();
@@ -23,6 +24,7 @@ app.use(limiter);
 app.use(helmet());
 app.use(express.json());
 app.use('/api/v1/employees', employeesRoutes);
+app.use('/api/v1/products', productRoutes);
 
 // starts the server instance
 const startServer = async () => {
