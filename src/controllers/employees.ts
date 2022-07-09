@@ -33,10 +33,13 @@ export default class EmployeesController {
 
 	async createEmployee(req: Request, res: Response): Promise<void> {
 		try {
-			const { firstName, lastName } = req.body;
-			const newEmployee = await Employee.create({ firstName, lastName });
-			console.log(newEmployee);
-			res.status(201).json({ data: newEmployee });
+			const new_employee = req.body;
+			if (!new_employee) {
+				res.status(400).json({ message: 'No data received.' });
+				return;
+			}
+			await Employee.create({ ...new_employee });
+			res.status(201).json({ message: 'Employee created successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 			console.log(err);
