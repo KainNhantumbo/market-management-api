@@ -18,7 +18,7 @@ const createToken = async (payload: PayloadProps): Promise<string> =>
 	new Promise((resolve) => {
 		const secret = process.env.JWT_SECRET || '';
 		const token = jwt.sign({ id: payload.id, name: payload.name }, secret, {
-			expiresIn: process.env.JWT_EXP,
+			expiresIn: process.env.JWT_EXPDATE,
 		});
 		resolve(token);
 	});
