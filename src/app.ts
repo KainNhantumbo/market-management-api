@@ -1,4 +1,7 @@
 import express, { Application, Response, Request } from 'express';
+import cors from 'cors';
+import { rateLimit } from 'express-rate-limit';
+import helmet from 'helmet';
 import { config } from 'dotenv';
 import db from './database/connection';
 import { router as employeesRoutes } from './routes/employees';
@@ -8,12 +11,17 @@ config();
 
 const app: Application = express();
 const PORT = process.env.PORT;
-
-app.get('/', (req: Request, res: Response) => {
-	res.json({ name: 'tar' });
+const limiter = rateLimit({
+	windowMs: 10 * 60 * 1000,
+	max: 100,
+	standardHeaders: true,
+	legacyHeaders: false,
 });
 
-app.use(express.json())
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(limiter);
+app.use(helmet());
+app.use(express.json());
 app.use('/api/v1/employees', employeesRoutes);
 
 // starts the server instance
