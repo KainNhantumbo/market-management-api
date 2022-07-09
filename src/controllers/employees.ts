@@ -13,11 +13,16 @@ export default class EmployeesController {
 
 	async getEmployee(req: Request, res: Response): Promise<void> {
 		try {
-			const employee = await Employee.findOne({ where: { id: req.params.id } });
+			const employee_id = Number(req.params.id);
+			if (!employee_id) {
+				res.status(400).json({ message: 'Provided ID is invalid.' });
+				return;
+			}
+			const employee = await Employee.findOne({ where: { id: employee_id } });
 			if (!employee) {
 				res
 					.status(404)
-					.json({ message: `Employee with ${req.params.id} not found.` });
+					.json({ message: `Employee with ${employee_id} not found.` });
 				return;
 			}
 			res.status(200).json({ data: employee });
@@ -40,6 +45,13 @@ export default class EmployeesController {
 
 	async updateEmployee(req: Request, res: Response): Promise<void> {
 		try {
+			const updatedData = req.body;
+			const employee_id = Number(req.params.id);
+			if (!employee_id) {
+				res.status(400).json({ message: 'Provided ID is invalid.' });
+				return;
+			}
+			await Employee.update({ ...updatedData }, { where: { id: employee_id } });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
@@ -47,6 +59,11 @@ export default class EmployeesController {
 
 	async deleteEmployee(req: Request, res: Response): Promise<void> {
 		try {
+			const employee_id = Number(req.params.id);
+			if (!employee_id) {
+				res.status(400).json({ message: 'Provided ID is invalid.' });
+				return;
+			}
 		} catch (err) {
 			res.status(500).json({ err });
 		}
