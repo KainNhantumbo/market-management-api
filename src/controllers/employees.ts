@@ -53,8 +53,16 @@ export default class EmployeesController {
 			if (!employee_id) {
 				res.status(400).json({ message: 'Provided ID is invalid.' });
 				return;
+			} else if (!updatedData) {
+				res
+					.status(400)
+					.json({ message: 'No data received for this update operation.' });
+				return;
 			}
-			await Employee.update({ ...updatedData }, { where: { id: employee_id } });
+			await Employee.update(
+				{ ...updatedData },
+				{ where: { id: employee_id }, returning: false }
+			);
 		} catch (err) {
 			res.status(500).json({ err });
 		}

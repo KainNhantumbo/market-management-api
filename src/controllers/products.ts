@@ -57,6 +57,22 @@ export default class ProductsController {
 
 	async updateProduct(req: Request, res: Response): Promise<void> {
 		try {
+			const product_id = Number(req.params.id);
+			const updatedProduct = req.body;
+			if (!product_id) {
+				res.status(400).json({ message: 'Provided product id is invalid.' });
+				return;
+			} else if (!updatedProduct) {
+				res
+					.status(400)
+					.json({ message: 'No data received for this update operation.' });
+				return;
+			}
+			await Product.update(
+				{ ...updatedProduct },
+				{ where: { id: product_id }, returning: false }
+			);
+			res.status(200).json({ message: 'Product updated successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
