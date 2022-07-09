@@ -73,7 +73,7 @@ User.init(
 );
 
 // hooks
-// hashes the password before creating a user
+// hashes the password before creating the user
 User.beforeCreate(async (user: any) => {
 	try {
 		const hashedPassword = await bcrypt.hash(user.password, 10);

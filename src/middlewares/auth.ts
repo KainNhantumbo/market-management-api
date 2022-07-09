@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import { Response, NextFunction, Request } from 'express';
@@ -10,18 +9,6 @@ interface PayloadProps {
 	name: string;
 	id: number;
 }
-
-/**
- * @param payload Object that must contain user id and name
- */
-const createToken = async (payload: PayloadProps): Promise<string> =>
-	new Promise((resolve) => {
-		const secret = process.env.JWT_SECRET || '';
-		const token = jwt.sign({ id: payload.id, name: payload.name }, secret, {
-			expiresIn: process.env.JWT_EXP,
-		});
-		resolve(token);
-	});
 
 // a asynchronous function to verify integrity of the token
 const verifyToken = (token: string, secret: string) =>
@@ -46,7 +33,13 @@ const authenticator = async (
 		// inserts user object into request middleware
 		(req as any).user = { id: payload.id, name: payload.name };
 		next();
-	} catch (err) {
+	} catch (err: any) {
+		if (err.message === 'jwt malformed') {
+			res
+				.status(401)
+				.json({ code: 'ERR_BAD_REQUEST', message: 'Invalid authentication.' });
+			return;
+		}
 		res.status(500).json({ err });
 	}
 };
