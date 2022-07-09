@@ -43,6 +43,13 @@ export default class ProductsController {
 
 	async createProduct(req: Request, res: Response): Promise<void> {
 		try {
+			const new_product = req.body;
+			if (!new_product) {
+				res.status(400).json({ message: 'No data received.' });
+				return;
+			}
+			await Product.create({ ...new_product }, { returning: false });
+			res.status(201).json({ message: 'Product created successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}

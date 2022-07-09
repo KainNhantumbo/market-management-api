@@ -38,7 +38,7 @@ export default class EmployeesController {
 				res.status(400).json({ message: 'No data received.' });
 				return;
 			}
-			await Employee.create({ ...new_employee });
+			await Employee.create({ ...new_employee }, { returning: false });
 			res.status(201).json({ message: 'Employee created successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
