@@ -64,6 +64,8 @@ export default class EmployeesController {
 				res.status(400).json({ message: 'Provided ID is invalid.' });
 				return;
 			}
+			await Employee.destroy({ where: { id: employee_id } });
+			res.status(200).json({ message: 'Employee data deleted successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
