@@ -35,7 +35,9 @@ export default class EmployeesController {
 		try {
 			const new_employee = req.body;
 			if (!new_employee) {
-				res.status(400).json({ message: 'No data received.' });
+				res
+					.status(400)
+					.json({ message: 'No data received to create employee.' });
 				return;
 			}
 			await Employee.create({ ...new_employee }, { returning: false });

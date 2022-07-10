@@ -35,6 +35,13 @@ export default class PurchaseReportController {
 
 	async createPurchaseReport(req: Request, res: Response) {
 		try {
+			const new_report = req.body;
+			if (!new_report) {
+				res.status(400).json({ message: 'No data received to create a report.' });
+				return;
+			}
+			await PurchaseReport.create({ ...new_report }, { returning: false });
+			res.status(201).json({ message: 'Purchase report saved successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
