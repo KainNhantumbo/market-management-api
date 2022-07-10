@@ -51,6 +51,17 @@ export default class SaleReportController {
 
 	async deleteSaleReport(req: Request, res: Response) {
 		try {
+			const report_id = Number(req.params.id);
+			if (!report_id) {
+				res
+					.status(400)
+					.json({ message: 'Provided sale report ID is invalid.' });
+				return;
+			}
+			await SaleReport.destroy({ where: { id: report_id } });
+			res
+				.status(200)
+				.json({ message: 'Sale report data deleted successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
