@@ -12,7 +12,7 @@ export default class UserController {
 	}
 	async getUser(req: Request, res: Response) {
 		try {
-			const user_id = req.params.id;
+			const user_id = Number(req.params.id);
 			if (!user_id) {
 				res.status(400).json({ message: 'Invalid user ID.' });
 				return;
@@ -31,6 +31,22 @@ export default class UserController {
 	}
 	async updateUser(req: Request, res: Response) {
 		try {
+			const updatedData = req.body;
+			const user_id = req.params.id;
+			if (!user_id) {
+				res.status(400).json({ message: 'Provided employee ID is invalid.' });
+				return;
+			} else if (!updatedData) {
+				res
+					.status(400)
+					.json({ message: 'No data received for this update operation.' });
+				return;
+			}
+			await User.update(
+				{ ...updatedData },
+				{ where: { id: user_id }, returning: false }
+			);
+			res.status(200).json({ message: 'User data updated successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}

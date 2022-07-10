@@ -20,11 +20,9 @@ export default class EmployeesController {
 			}
 			const employee = await Employee.findOne({ where: { id: employee_id } });
 			if (!employee) {
-				res
-					.status(404)
-					.json({
-						message: `Employee with provided ID [${employee_id}] not found.`,
-					});
+				res.status(404).json({
+					message: `Employee with provided ID [${employee_id}] not found.`,
+				});
 				return;
 			}
 			res.status(200).json({ data: employee });
@@ -65,6 +63,7 @@ export default class EmployeesController {
 				{ ...updatedData },
 				{ where: { id: employee_id }, returning: false }
 			);
+			res.status(200).json({ message: 'Employee data updated successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
