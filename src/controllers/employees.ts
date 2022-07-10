@@ -1,4 +1,4 @@
-import { Employee } from '../models/Employees';
+import Employee from '../models/Employees';
 import { Request, Response } from 'express';
 
 export default class EmployeesController {
@@ -22,7 +22,9 @@ export default class EmployeesController {
 			if (!employee) {
 				res
 					.status(404)
-					.json({ message: `Employee with ${employee_id} not found.` });
+					.json({
+						message: `Employee with provided ID [${employee_id}] not found.`,
+					});
 				return;
 			}
 			res.status(200).json({ data: employee });

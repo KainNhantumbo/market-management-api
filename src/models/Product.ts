@@ -51,4 +51,4 @@ Product.init(
 );
 // creates the table
 // Product.sync({ force: true });
-export { Product };
+export default Product;

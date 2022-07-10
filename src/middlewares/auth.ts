@@ -4,7 +4,6 @@ import { Response, NextFunction, Request } from 'express';
 
 // loads environment variables
 config();
-
 interface PayloadProps {
 	name: string;
 	id: number;
@@ -16,6 +15,7 @@ const verifyToken = (token: string, secret: string) =>
 		const result = jwt.verify(token, secret);
 		resolve(result);
 	});
+	
 // authenticates the user
 const authenticator = async (
 	req: Request,

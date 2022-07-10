@@ -49,7 +49,6 @@ SaleReport.init(
 	}
 );
 
-// table synchronization 
+// table synchronization
 SaleReport.sync({ force: true });
-
-export { SaleReport };
+export default SaleReport;

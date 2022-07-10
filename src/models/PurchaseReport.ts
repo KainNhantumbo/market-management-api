@@ -49,5 +49,4 @@ PurchaseReport.init(
 );
 
 PurchaseReport.sync({ force: true });
-
-export { PurchaseReport };
+export default PurchaseReport;

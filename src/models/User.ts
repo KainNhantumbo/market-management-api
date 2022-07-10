@@ -72,8 +72,7 @@ User.init(
 	}
 );
 
-// hooks
-// hashes the password before creating the user
+// hooks: hashes the password before creating the user
 User.beforeCreate(async (user: any) => {
 	try {
 		const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -85,5 +84,4 @@ User.beforeCreate(async (user: any) => {
 
 // creates the table
 User.sync({ force: true });
-
-export { User };
+export default User;
