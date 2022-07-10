@@ -1,4 +1,4 @@
-import { Model, DataTypes, UUIDV4 } from 'sequelize/types';
+import { Model, DataTypes, UUIDV4 } from 'sequelize';
 import db from '../database/connection';
 
 class SaleReport extends Model {}
@@ -37,7 +37,7 @@ SaleReport.init(
 			type: DataTypes.STRING({ length: 250 }),
 		},
 		reference_id: {
-			type: DataTypes.UUIDV4,
+			type: DataTypes.UUID,
 			defaultValue: UUIDV4,
 		},
 	},

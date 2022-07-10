@@ -9,6 +9,8 @@ import { productsRoutes } from './routes/products';
 import { error404Route } from './routes/error404';
 import { userRoutes } from './routes/users';
 import { authRoutes } from './routes/auth';
+import { purchaseReportRoutes } from './routes/purchaseReports';
+import { salesReportRoutes } from './routes/saleReports';
 
 // loads environment variables
 config();
@@ -30,6 +32,8 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productsRoutes);
 app.use('/api/v1/employees', employeesRoutes);
+app.use('/api/v1/sale-reports', salesReportRoutes);
+app.use('/api/v1/purchase-reports', purchaseReportRoutes);
 app.use(error404Route);
 
 // starts the server instance
