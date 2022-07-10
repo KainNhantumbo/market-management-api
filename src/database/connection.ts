@@ -1,15 +1,16 @@
-import { Sequelize, QueryInterface } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import { config } from 'dotenv';
 
 // loads environment variables
 config();
-// instance of database connection configuration
+// creates an instance of database connection
 const db = new Sequelize({
 	dialect: 'postgres',
 	host: process.env.DB_HOST,
 	username: process.env.DB_USER_NAME,
 	password: process.env.DB_PASSWORD,
 	database: 'Market Management',
+	logging: false,
 });
 
 export default db;
