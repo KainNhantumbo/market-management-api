@@ -35,6 +35,15 @@ export default class SaleReportController {
 
 	async createSaleReport(req: Request, res: Response) {
 		try {
+			const new_report = req.body;
+			if (!new_report) {
+				res
+					.status(400)
+					.json({ message: 'No data received to create a sale report.' });
+				return;
+			}
+			await SaleReport.create({ ...new_report }, { returning: false });
+			res.status(201).json({ message: 'Sale report saved successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}

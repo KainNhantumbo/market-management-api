@@ -39,7 +39,7 @@ export default class PurchaseReportController {
 			if (!new_report) {
 				res
 					.status(400)
-					.json({ message: 'No data received to create a report.' });
+					.json({ message: 'No data received to create a purchase report.' });
 				return;
 			}
 			await PurchaseReport.create({ ...new_report }, { returning: false });
@@ -48,7 +48,7 @@ export default class PurchaseReportController {
 			res.status(500).json({ err });
 		}
 	}
-  
+
 	async deletePurchaseReport(req: Request, res: Response) {
 		try {
 			const report_id = Number(req.params.id);
