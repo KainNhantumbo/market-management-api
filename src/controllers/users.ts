@@ -32,9 +32,9 @@ export default class UserController {
 	async updateUser(req: Request, res: Response) {
 		try {
 			const updatedData = req.body;
-			const user_id = req.params.id;
+			const user_id = Number(req.params.id);
 			if (!user_id) {
-				res.status(400).json({ message: 'Provided employee ID is invalid.' });
+				res.status(400).json({ message: 'Provided user ID is invalid.' });
 				return;
 			} else if (!updatedData) {
 				res
@@ -53,6 +53,13 @@ export default class UserController {
 	}
 	async deleteUser(req: Request, res: Response) {
 		try {
+			const user_id = Number(req.params.id);
+			if (!user_id) {
+				res.status(400).json({ message: 'Provided user ID is invalid.' });
+				return;
+			}
+			await User.destroy({ where: { id: user_id } });
+			res.status(200).json({ message: 'User data deleted successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
