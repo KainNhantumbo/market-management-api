@@ -43,8 +43,8 @@ SaleReport.init(
 	},
 	{
 		sequelize: db,
-		tableName: 'purchase_reports',
-		modelName: 'purchase_reports',
+		tableName: 'sale_reports',
+		modelName: 'sale_reports',
 		timestamps: true,
 	}
 );

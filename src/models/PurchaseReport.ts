@@ -13,7 +13,7 @@ PurchaseReport.init(
 			allowNull: false,
 		},
 		quantity: {
-			type: DataTypes.INTEGER({ length: 20 }),
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 		price: {
@@ -48,5 +48,6 @@ PurchaseReport.init(
 	}
 );
 
+// table synchronization
 PurchaseReport.sync({ force: true });
 export default PurchaseReport;
