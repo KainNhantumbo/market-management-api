@@ -39,7 +39,7 @@ User.init(
 			allowNull: true,
 		},
 		age: {
-			type: DataTypes.NUMBER({ length: 3 }),
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 		gender: {
