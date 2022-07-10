@@ -8,6 +8,7 @@ import { employeesRoutes } from './routes/employees';
 import { productsRoutes } from './routes/products';
 import { error404Route } from './routes/error404';
 import { userRoutes } from './routes/users';
+import { authRoutes } from './routes/auth';
 
 // loads environment variables
 config();
@@ -25,9 +26,10 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
-app.use('/api/v1/employees', employeesRoutes);
-app.use('/api/v1/products', productsRoutes);
+app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/products', productsRoutes);
+app.use('/api/v1/employees', employeesRoutes);
 app.use(error404Route);
 
 // starts the server instance

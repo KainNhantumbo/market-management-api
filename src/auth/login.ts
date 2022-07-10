@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import brypt from 'bcrypt';
-import { User } from '../models/User';
+import User  from '../models/User';
 import { Response, Request } from 'express';
 
 // loads environment variables

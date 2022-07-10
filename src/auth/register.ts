@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
-import { User } from '../models/User';
+import User from '../models/User';
 import { Response, Request } from 'express';
 
 // loads environment variables
