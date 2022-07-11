@@ -64,5 +64,5 @@ Employee.init(
 );
 
 // creates the table
-// Employee.sync({ force: true });
+Employee.sync({ force: true });
 export default Employee ;

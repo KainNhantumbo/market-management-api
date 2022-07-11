@@ -50,5 +50,5 @@ Product.init(
 	}
 );
 // creates the table
-// Product.sync({ force: true });
+Product.sync({ force: true });
 export default Product;
