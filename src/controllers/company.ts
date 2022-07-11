@@ -25,12 +25,23 @@ export default class CompanyController {
 			res.status(500).json({ err });
 		}
 	}
+
 	async createtCompany(req: Request, res: Response): Promise<void> {
 		try {
+      const new_company = req.body;
+			if (!new_company) {
+				res
+					.status(400)
+					.json({ message: 'No data received to create a company settings.' });
+				return;
+			}
+			await Company.create({ ...new_company }, { returning: false });
+			res.status(201).json({ message: 'Company settings saved successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
 	}
+
 	async updateCompany(req: Request, res: Response): Promise<void> {
 		try {
 		} catch (err) {
