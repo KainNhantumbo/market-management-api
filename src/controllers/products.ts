@@ -25,7 +25,7 @@ export default class ProductsController {
 		try {
 			const product_id = Number(req.params.id);
 			if (!product_id) {
-				res.status(400).json({ message: 'Provided product id is invalid.' });
+				res.status(400).json({ message: 'Provided product ID is invalid.' });
 				return;
 			}
 			const product = await Product.findOne({ where: { id: product_id } });
