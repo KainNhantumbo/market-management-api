@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
-import brypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import User  from '../models/User';
 import { Response, Request } from 'express';
 
@@ -42,7 +42,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
 			return;
 		}
     // password lookup for match
-		const match = await brypt.compare(password, (user as any).password);
+		const match = await bcrypt.compare(password, (user as any).password);
 		if (!match) {
 			res.status(401).json({ message: 'Wrong password. Check and try again.' });
 		}
