@@ -33,7 +33,19 @@ export default class CategoriesController {
 		}
 	}
 
-
+	async createCategory(req: Request, res: Response): Promise<void> {
+		try {
+			const new_category = req.body;
+			if (!new_category) {
+				res.status(400).json({ message: 'No data received to save category.' });
+				return;
+			}
+			await Category.create({ ...new_category }, { returning: false });
+			res.status(201).json({ message: 'Category saved successfuly.' });
+		} catch (err) {
+			res.status(500).json({ err });
+		}
+	}
 
 	async updateCategory(req: Request, res: Response): Promise<void> {
 		try {
