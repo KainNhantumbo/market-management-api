@@ -12,6 +12,7 @@ import { authRoutes } from './routes/auth';
 import { purchaseReportRoutes } from './routes/purchaseReports';
 import { salesReportRoutes } from './routes/saleReports';
 import { companyRoutes } from './routes/company';
+import { categoriesRoutes } from './routes/categories';
 
 // loads environment variables
 config();
@@ -35,6 +36,7 @@ app.use('/api/v1/products', productsRoutes);
 app.use('/api/v1/employees', employeesRoutes);
 app.use('/api/v1/sale-reports', salesReportRoutes);
 app.use('/api/v1/purchase-reports', purchaseReportRoutes);
+app.use('/api/v1/categories', categoriesRoutes);
 app.use('/api/v1/company', companyRoutes);
 app.use(error404Route);
 
