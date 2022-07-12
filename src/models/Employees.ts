@@ -41,12 +41,7 @@ Employee.init(
 		},
 		adress: {
 			type: DataTypes.STRING({ length: 150 }),
-			allowNull: false,
-			validate: {
-				notNull: {
-					msg: 'Please enter your adress.',
-				},
-			},
+			defaultValue: 'No adress provided.',
 		},
 		age: {
 			type: DataTypes.INTEGER,
