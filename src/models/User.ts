@@ -3,7 +3,6 @@ import { Model, DataTypes, UUIDV4 } from 'sequelize';
 import bcrypt from 'bcrypt';
 
 class User extends Model {}
-
 User.init(
 	{
 		first_name: {
@@ -83,5 +82,6 @@ User.beforeCreate(async (user: any) => {
 });
 
 // creates the table
+// table synchronization
 User.sync({ force: true });
 export default User;

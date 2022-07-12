@@ -1,8 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '../database/connection';
 
-class Categories extends Model {}
-Categories.init(
+class Category extends Model {}
+Category.init(
 	{
 		name: {
 			type: DataTypes.STRING({ length: 256 }),
@@ -11,11 +11,11 @@ Categories.init(
 	},
 	{
 		sequelize: db,
-		tableName: 'categories',
-		modelName: 'categories',
+		tableName: 'category',
+		modelName: 'category',
 		timestamps: true,
 	}
 );
-
-Categories.sync({ force: true });
-export default Categories;
+// table synchronization
+Category.sync({ force: true });
+export default Category;

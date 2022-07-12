@@ -2,7 +2,6 @@ import { Model, DataTypes } from 'sequelize';
 import db from '../database/connection';
 
 class Company extends Model {}
-
 Company.init(
 	{
 		name: {
@@ -41,6 +40,6 @@ Company.init(
 		timestamps: true,
 	}
 );
-
+// table synchronization
 Company.sync({ force: true });
 export default Company;

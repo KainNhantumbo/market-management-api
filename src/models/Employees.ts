@@ -2,7 +2,6 @@ import db from '../database/connection';
 import { Model, DataTypes, UUIDV4 } from 'sequelize';
 
 class Employee extends Model {}
-
 Employee.init(
 	{
 		first_name: {
@@ -65,4 +64,4 @@ Employee.init(
 
 // creates the table
 Employee.sync({ force: true });
-export default Employee ;
+export default Employee;

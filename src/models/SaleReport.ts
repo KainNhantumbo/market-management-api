@@ -2,7 +2,6 @@ import { Model, DataTypes, UUIDV4 } from 'sequelize';
 import db from '../database/connection';
 
 class SaleReport extends Model {}
-
 SaleReport.init(
 	{
 		name: {
