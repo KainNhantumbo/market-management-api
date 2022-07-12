@@ -50,7 +50,7 @@ export default class CompanyController {
 			} else if (!updatedData) {
 				res
 					.status(400)
-					.json({ message: 'No data received for this update operation.' });
+					.json({ message: 'No data received for update operation.' });
 				return;
 			}
 			await Company.update(

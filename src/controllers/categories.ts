@@ -49,6 +49,22 @@ export default class CategoriesController {
 
 	async updateCategory(req: Request, res: Response): Promise<void> {
 		try {
+			const updatedData = req.body;
+			const category_id = Number(req.params.id);
+			if (!category_id) {
+				res.status(400).json({ message: 'Provided category ID is invalid.' });
+				return;
+			} else if (!updatedData) {
+				res
+					.status(400)
+					.json({ message: 'No data received for update operation.' });
+				return;
+			}
+			await Category.update(
+				{ ...updatedData },
+				{ where: { id: category_id }, returning: false }
+			);
+			res.status(200).json({ message: 'Category updated successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
