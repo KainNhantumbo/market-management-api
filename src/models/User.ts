@@ -53,10 +53,6 @@ User.init(
 			type: DataTypes.STRING({ length: 250 }),
 			allowNull: false,
 		},
-		date_of_entry: {
-			type: DataTypes.DATE,
-			allowNull: true,
-		},
 		reference_id: {
 			type: DataTypes.UUID,
 			allowNull: false,

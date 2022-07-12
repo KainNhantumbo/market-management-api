@@ -7,6 +7,7 @@ Category.init(
 		name: {
 			type: DataTypes.STRING({ length: 256 }),
 			allowNull: false,
+			defaultValue: 'Acessories',
 		},
 	},
 	{

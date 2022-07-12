@@ -7,10 +7,20 @@ Company.init(
 		name: {
 			type: DataTypes.STRING({ length: 250 }),
 			allowNull: false,
+			validate: {
+				notNull: {
+					msg: 'Please enter company name.',
+				},
+			},
 		},
 		description: {
 			type: DataTypes.TEXT,
 			allowNull: false,
+			validate: {
+				notNull: {
+					msg: 'Please enter company description.',
+				},
+			},
 		},
 		group: {
 			type: DataTypes.STRING({ length: 250 }),
@@ -19,25 +29,45 @@ Company.init(
 		country: {
 			type: DataTypes.STRING({ length: 150 }),
 			allowNull: false,
+			validate: {
+				notNull: {
+					msg: 'Please enter company country.',
+				},
+			},
 		},
 		adress: {
 			type: DataTypes.TEXT,
 			allowNull: false,
+			validate: {
+				notNull: {
+					msg: 'Please enter company adress.',
+				},
+			},
 		},
 		phone: {
 			type: DataTypes.STRING({ length: 50 }),
 			allowNull: false,
+			validate: {
+				notNull: {
+					msg: 'Please enter your phone number.',
+				},
+			},
 		},
-		currency: {
-			type: DataTypes.STRING({ length: 5 }),
+		email: {
+			type: DataTypes.STRING({ length: 50 }),
 			allowNull: false,
+			validate: {
+				isEmail: {
+					msg: 'Please provide valid e-mail.',
+				},
+			},
 		},
 	},
 	{
 		sequelize: db,
 		modelName: 'company',
 		tableName: 'company',
-		timestamps: true,
+		createdAt: true,
 	}
 );
 // table synchronization
