@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize/types';
+import { Model, DataTypes } from 'sequelize';
 import db from '../database/connection';
 
 class Company extends Model {}
@@ -27,6 +27,10 @@ Company.init(
 		},
 		phone: {
 			type: DataTypes.STRING({ length: 50 }),
+			allowNull: false,
+		},
+		currency: {
+			type: DataTypes.STRING({ length: 5 }),
 			allowNull: false,
 		},
 	},

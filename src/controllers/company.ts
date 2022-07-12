@@ -1,4 +1,4 @@
-import Company from '../models/company';
+import Company from '../models/Company';
 import { Request, Response } from 'express';
 
 export default class CompanyController {
@@ -24,7 +24,7 @@ export default class CompanyController {
 		}
 	}
 
-	async createtCompany(req: Request, res: Response): Promise<void> {
+	async createCompany(req: Request, res: Response): Promise<void> {
 		try {
 			const new_company = req.body;
 			if (!new_company) {
