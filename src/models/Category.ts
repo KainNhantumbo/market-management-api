@@ -5,7 +5,7 @@ class Category extends Model {}
 Category.init(
 	{
 		name: {
-			type: DataTypes.STRING({ length: 256 }),
+			type: DataTypes.STRING({ length: 250 }),
 			allowNull: false,
 			defaultValue: 'Acessories',
 		},
