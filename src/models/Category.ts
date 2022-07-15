@@ -18,5 +18,5 @@ Category.init(
 	}
 );
 // table synchronization
-Category.sync({ force: true });
+// Category.sync({ alter: true });
 export default Category;

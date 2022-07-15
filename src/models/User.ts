@@ -125,5 +125,5 @@ User.beforeCreate(async (user: any) => {
 
 // creates the table
 // table synchronization
-User.sync({ force: true });
+// User.sync({ alter: true });
 export default User;

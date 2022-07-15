@@ -72,5 +72,5 @@ Product.init(
 	}
 );
 // creates the table
-Product.sync({ force: true });
+// Product.sync({ alter: true });
 export default Product;

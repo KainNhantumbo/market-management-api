@@ -1,10 +1,14 @@
 import { Router } from 'express';
 import CompanyController from '../controllers/company';
+import authenticator from '../middlewares/auth';
 
 const router = Router();
 const controller = new CompanyController();
 
-router.route('/').post(controller.createCompany);
-router.route('/:id').get(controller.getCompany).patch(controller.updateCompany);
+router
+	.route('/')
+	.get(authenticator, controller.getCompany)
+	.post(authenticator, controller.createCompany)
+	.patch(authenticator, controller.updateCompany);
 
 export { router as companyRoutes };

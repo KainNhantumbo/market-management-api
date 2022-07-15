@@ -1,7 +1,9 @@
 import { Model, DataTypes } from 'sequelize';
+import User from './User';
 import db from '../database/connection';
 
 class Company extends Model {}
+
 Company.init(
 	{
 		name: {
@@ -62,6 +64,14 @@ Company.init(
 				},
 			},
 		},
+		createdBy: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			references: {
+				model: User,
+				key: 'id',
+			},
+		},
 	},
 	{
 		sequelize: db,
@@ -71,5 +81,5 @@ Company.init(
 	}
 );
 // table synchronization
-Company.sync({ force: true });
+// Company.sync({ force: true });
 export default Company;

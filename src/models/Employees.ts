@@ -103,5 +103,5 @@ Employee.init(
 );
 
 // creates the table
-Employee.sync({ force: true });
+// Employee.sync({ alter: true });
 export default Employee;
