@@ -4,7 +4,6 @@ import UserController from '../controllers/users';
 const router = Router();
 const controller = new UserController();
 
-router.route('/').get(controller.getUsers);
 router
 	.route('/:id')
 	.get(controller.getUser)

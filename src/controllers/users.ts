@@ -1,16 +1,9 @@
 import User from '../models/User';
 import { Request, Response } from 'express';
+import { ControllerResponse } from '../types/controller-responses';
 
 export default class UserController {
-	async getUsers(req: Request, res: Response) {
-		try {
-			const users = await User.findAll({});
-			res.status(200).json({ results: users.length, data: users });
-		} catch (err) {
-			res.status(500).json({ err });
-		}
-	}
-	async getUser(req: Request, res: Response) {
+	async getUser(req: Request, res: Response): ControllerResponse {
 		try {
 			const user_id = Number(req.params.id);
 			if (!user_id) {
@@ -29,7 +22,8 @@ export default class UserController {
 			res.status(500).json({ err });
 		}
 	}
-	async updateUser(req: Request, res: Response) {
+
+	async updateUser(req: Request, res: Response): ControllerResponse  {
 		try {
 			const updatedData = req.body;
 			const user_id = Number(req.params.id);
@@ -51,7 +45,8 @@ export default class UserController {
 			res.status(500).json({ err });
 		}
 	}
-	async deleteUser(req: Request, res: Response) {
+
+	async deleteUser(req: Request, res: Response): ControllerResponse  {
 		try {
 			const user_id = Number(req.params.id);
 			if (!user_id) {

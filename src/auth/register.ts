@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import User from '../models/User';
 import { Response, Request } from 'express';
+import { ControllerResponse } from '../types/controller-responses';
 
 // loads environment variables
 config();
@@ -24,7 +25,7 @@ const createToken = async (payload: PayloadProps): Promise<string> =>
 	});
 
 // creates a new user account
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response): ControllerResponse => {
 	const { password } = req.body;
 	if (password.length < 6)
 		return res

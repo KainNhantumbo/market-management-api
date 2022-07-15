@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import bcrypt from 'bcrypt';
 import User from '../models/User';
 import { Response, Request } from 'express';
+import { ControllerResponse } from '../types/controller-responses';
 
 // loads environment variables
 config();
@@ -26,7 +27,7 @@ const createToken = async (payload: PayloadProps) =>
 	});
 
 // login the user in the system
-const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response): ControllerResponse => {
 	const { user_name, password } = req.body;
 	if (!user_name || !password)
 		return res.status(400).json({
