@@ -1,17 +1,18 @@
 import { Router } from 'express';
+import authenticator from '../middlewares/auth';
 import SaleReportController from '../controllers/saleReport';
 
-const controller = new SaleReportController();
 const router = Router();
+const controller = new SaleReportController();
 
 router
 	.route('/')
-	.get(controller.getSaleReports)
-	.post(controller.createSaleReport);
+	.get(authenticator, controller.getSaleReports)
+	.post(authenticator, controller.createSaleReport);
 
 router
 	.route('/:id')
-	.get(controller.getSaleReport)
-	.delete(controller.deleteSaleReport);
+	.get(authenticator, controller.getSaleReport)
+	.delete(authenticator, controller.deleteSaleReport);
 
 export { router as salesReportRoutes };
