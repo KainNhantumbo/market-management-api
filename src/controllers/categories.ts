@@ -3,43 +3,46 @@ import { Request, Response } from 'express';
 
 export default class CategoriesController {
 	async getCategories(req: Request, res: Response): Promise<void> {
+		const user_id = (req as any).user.id;
 		try {
-			const categories = await Category.findAll({});
+			const categories = await Category.findAll({
+				where: { createdBy: user_id },
+			});
 			res.status(200).json({ results: categories.length, data: categories });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
 	}
 
-	async getCategory(req: Request, res: Response): Promise<void> {
+	async getCategory(req: Request, res: Response) {
+		const category_id = Number(req.params.id);
+		const user_id = (req as any).user.id;
+		if (!category_id)
+			return res
+				.status(400)
+				.json({ message: 'Provided category ID is invalid.' });
 		try {
-			const category_id = Number(req.params.id);
-			if (!category_id) {
-				res.status(400).json({ message: 'Provided category ID is invalid.' });
-				return;
-			}
 			const category = await Category.findOne({
-				where: { id: category_id },
+				where: { id: category_id, createdBy: user_id },
 			});
-			if (!category) {
-				res.status(404).json({
+			if (!category)
+				return res.status(404).json({
 					message: `No category with ID:[${category_id}] was found.`,
 				});
-				return;
-			}
 			res.status(200).json({ data: category });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
 	}
 
-	async createCategory(req: Request, res: Response): Promise<void> {
+	async createCategory(req: Request, res: Response) {
+		const new_category = req.body;
+		new_category.createdBy = (req as any).user.id;
+		if (!new_category)
+			return res
+				.status(400)
+				.json({ message: 'No data received to save category.' });
 		try {
-			const new_category = req.body;
-			if (!new_category) {
-				res.status(400).json({ message: 'No data received to save category.' });
-				return;
-			}
 			await Category.create({ ...new_category }, { returning: false });
 			res.status(201).json({ message: 'Category saved successfuly.' });
 		} catch (err) {
@@ -47,22 +50,22 @@ export default class CategoriesController {
 		}
 	}
 
-	async updateCategory(req: Request, res: Response): Promise<void> {
+	async updateCategory(req: Request, res: Response) {
+		const updatedData = req.body;
+		const category_id = Number(req.params.id);
+		const user_id = (req as any).user.id;
+		if (!category_id)
+			return res
+				.status(400)
+				.json({ message: 'Provided category ID is invalid.' });
+		if (!updatedData)
+			return res
+				.status(400)
+				.json({ message: 'No data received for update operation.' });
 		try {
-			const updatedData = req.body;
-			const category_id = Number(req.params.id);
-			if (!category_id) {
-				res.status(400).json({ message: 'Provided category ID is invalid.' });
-				return;
-			} else if (!updatedData) {
-				res
-					.status(400)
-					.json({ message: 'No data received for update operation.' });
-				return;
-			}
 			await Category.update(
 				{ ...updatedData },
-				{ where: { id: category_id }, returning: false }
+				{ where: { id: category_id, createdBy: user_id }, returning: false }
 			);
 			res.status(200).json({ message: 'Category updated successfuly.' });
 		} catch (err) {
@@ -70,14 +73,17 @@ export default class CategoriesController {
 		}
 	}
 
-	async deleteCategory(req: Request, res: Response): Promise<void> {
+	async deleteCategory(req: Request, res: Response) {
+		const category_id = Number(req.params.id);
+		const user_id = (req as any).user.id;
+		if (!category_id)
+			return res
+				.status(400)
+				.json({ message: 'Provided category ID is invalid.' });
 		try {
-			const category_id = Number(req.params.id);
-			if (!category_id) {
-				res.status(400).json({ message: 'Provided category ID is invalid.' });
-				return;
-			}
-			await Category.destroy({ where: { id: category_id } });
+			await Category.destroy({
+				where: { id: category_id, createdBy: user_id },
+			});
 			res.status(200).json({ message: 'Category deleted successfuly.' });
 		} catch (err) {
 			res.status(500).json({ err });

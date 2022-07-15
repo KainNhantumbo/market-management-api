@@ -27,19 +27,17 @@ const createToken = async (payload: PayloadProps) =>
 
 // login the user in the system
 const login = async (req: Request, res: Response) => {
+	const { user_name, password } = req.body;
+	if (!user_name || !password)
+		return res.status(400).json({
+			message: 'User name and password must be provided for authentication.',
+		});
 	try {
-		const { user_name, password } = req.body;
-		if (!user_name || !password) {
-			return res.status(400).json({
-				message: 'User name and password must be provided for authentication.',
-			});
-		}
 		const user = await User.findOne({ where: { user_name: user_name } });
-		if (!user) {
+		if (!user)
 			return res
 				.status(404)
 				.json({ message: 'User with provided username not found.' });
-		}
 		// password lookup for match
 		const match = await bcrypt.compare(password, (user as any).password);
 		if (!match) {
