@@ -1,4 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
+import User from './User';
 import db from '../database/connection';
 
 class Category extends Model {}
@@ -8,6 +9,13 @@ Category.init(
 			type: DataTypes.STRING({ length: 250 }),
 			allowNull: false,
 			defaultValue: 'Acessories',
+		},
+		createdBy: {
+			type: DataTypes.INTEGER,
+			references: {
+				model: User,
+				key: 'id',
+			},
 		},
 	},
 	{
