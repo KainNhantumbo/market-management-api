@@ -53,7 +53,6 @@ const login = async (req: Request, res: Response) => {
 			.json({ user: { id: (user as any).id, name: user_name }, token });
 	} catch (err) {
 		res.status(500).json({ err });
-		console.log(err);
 	}
 };
 

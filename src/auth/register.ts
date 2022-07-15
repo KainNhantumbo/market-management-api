@@ -25,6 +25,11 @@ const createToken = async (payload: PayloadProps): Promise<string> =>
 
 // creates a new user account
 const createUser = async (req: Request, res: Response) => {
+	const { password } = req.body;
+	if (password.length < 6)
+		return res
+			.status(400)
+			.json({ message: 'Your password must have at leat 6 characteres.' });
 	try {
 		const user: any = await User.create({ ...req.body }, { returning: true });
 		const token = await createToken({ id: user.id, name: user.user_name });
