@@ -4,11 +4,12 @@ import { ControllerResponse } from '../types/controller-responses';
 
 export default class UserController {
 	async getUser(req: Request, res: Response): ControllerResponse {
-		const user_id = Number(req.params.id);
-		if (!user_id)
-			return res.status(400).json({ message: 'User ID malformed.' });
+		const user_id = (req as any).user.id;
 		try {
-			const user = await User.findOne({ where: { id: user_id } });
+			const user = await User.findOne({
+				where: { id: user_id },
+				attributes: { exclude: ['password'] },
+			});
 			if (!user)
 				return res
 					.status(404)
@@ -21,9 +22,7 @@ export default class UserController {
 
 	async updateUser(req: Request, res: Response): ControllerResponse {
 		const updatedData = req.body;
-		const user_id = Number(req.params.id);
-		if (!user_id)
-			return res.status(400).json({ message: 'User ID malformed.' });
+		const user_id = (req as any).user.id;
 		if (!updatedData)
 			return res
 				.status(400)
@@ -40,9 +39,7 @@ export default class UserController {
 	}
 
 	async deleteUser(req: Request, res: Response): ControllerResponse {
-		const user_id = Number(req.params.id);
-		if (!user_id)
-			return res.status(400).json({ message: 'User ID malformed.' });
+		const user_id = (req as any).user.id;
 		try {
 			await User.destroy({ where: { id: user_id } });
 			res.status(200).json({ message: 'User data deleted successfuly.' });
