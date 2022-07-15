@@ -1,5 +1,5 @@
 import db from '../database/connection';
-import { Model, DataTypes, UUIDV4 } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
 
 class User extends Model {}
@@ -99,11 +99,6 @@ User.init(
 				},
 			},
 		},
-		reference_id: {
-			type: DataTypes.UUID,
-			allowNull: false,
-			defaultValue: UUIDV4,
-		},
 	},
 	{
 		sequelize: db,
@@ -125,5 +120,5 @@ User.beforeCreate(async (user: any) => {
 
 // creates the table
 // table synchronization
-// User.sync({ alter: true });
+User.sync({ force: true });
 export default User;

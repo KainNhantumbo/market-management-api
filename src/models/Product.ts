@@ -1,6 +1,5 @@
-import { Model, DataTypes, UUIDV4 } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import db from '../database/connection';
-import User from './User';
 
 class Product extends Model {}
 Product.init(
@@ -61,10 +60,7 @@ Product.init(
 		},
 		createdBy: {
 			type: DataTypes.INTEGER,
-			references: {
-				model: User,
-				key: 'id',
-			},
+			allowNull: false,
 		},
 	},
 	{
@@ -75,5 +71,5 @@ Product.init(
 	}
 );
 // creates the table
-// Product.sync({ alter: true });
+// Product.sync({ force: true });
 export default Product;

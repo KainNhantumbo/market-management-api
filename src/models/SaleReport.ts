@@ -1,4 +1,4 @@
-import { Model, DataTypes, UUIDV4 } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import db from '../database/connection';
 
 class SaleReport extends Model {}
@@ -35,9 +35,9 @@ SaleReport.init(
 		customer_name: {
 			type: DataTypes.STRING({ length: 250 }),
 		},
-		reference_id: {
-			type: DataTypes.UUID,
-			defaultValue: UUIDV4,
+		createdBy: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
 		},
 	},
 	{
@@ -49,5 +49,5 @@ SaleReport.init(
 );
 
 // table synchronization
-// SaleReport.sync({ alter: true });
+// SaleReport.sync({ force: true });
 export default SaleReport;

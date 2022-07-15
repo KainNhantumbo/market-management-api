@@ -1,5 +1,4 @@
 import { Model, DataTypes } from 'sequelize';
-import User from './User';
 import db from '../database/connection';
 
 class Company extends Model {}
@@ -67,10 +66,6 @@ Company.init(
 		createdBy: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			references: {
-				model: User,
-				key: 'id',
-			},
 		},
 	},
 	{

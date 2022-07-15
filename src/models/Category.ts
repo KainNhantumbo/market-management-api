@@ -1,5 +1,4 @@
 import { Model, DataTypes } from 'sequelize';
-import User from './User';
 import db from '../database/connection';
 
 class Category extends Model {}
@@ -12,10 +11,7 @@ Category.init(
 		},
 		createdBy: {
 			type: DataTypes.INTEGER,
-			references: {
-				model: User,
-				key: 'id',
-			},
+			allowNull: false,
 		},
 	},
 	{
@@ -26,5 +22,5 @@ Category.init(
 	}
 );
 // table synchronization
-// Category.sync({ alter: true });
+// Category.sync({ force: true });
 export default Category;

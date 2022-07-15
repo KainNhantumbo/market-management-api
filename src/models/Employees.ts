@@ -1,6 +1,5 @@
 import db from '../database/connection';
-import { Model, DataTypes, UUIDV4 } from 'sequelize';
-import User from './User';
+import { Model, DataTypes } from 'sequelize';
 
 class Employee extends Model {}
 Employee.init(
@@ -91,10 +90,7 @@ Employee.init(
 		},
 		createdBy: {
 			type: DataTypes.INTEGER,
-			references: {
-				model: User,
-				key: 'id',
-			},
+			allowNull: false,
 		},
 	},
 	{
@@ -106,5 +102,5 @@ Employee.init(
 );
 
 // creates the table
-// Employee.sync({ alter: true });
+// Employee.sync({ force: true });
 export default Employee;
