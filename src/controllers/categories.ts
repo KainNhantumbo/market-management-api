@@ -1,8 +1,9 @@
 import Category from '../models/Category';
 import { Request, Response } from 'express';
+import { ControllerResponse } from '../types/controller-responses';
 
 export default class CategoriesController {
-	async getCategories(req: Request, res: Response): Promise<void> {
+	async getCategories(req: Request, res: Response): ControllerResponse {
 		const user_id = (req as any).user.id;
 		try {
 			const categories = await Category.findAll({
@@ -14,7 +15,7 @@ export default class CategoriesController {
 		}
 	}
 
-	async getCategory(req: Request, res: Response) {
+	async getCategory(req: Request, res: Response): ControllerResponse {
 		const category_id = Number(req.params.id);
 		const user_id = (req as any).user.id;
 		if (!category_id)
@@ -35,7 +36,7 @@ export default class CategoriesController {
 		}
 	}
 
-	async createCategory(req: Request, res: Response) {
+	async createCategory(req: Request, res: Response): ControllerResponse {
 		const new_category = req.body;
 		new_category.createdBy = (req as any).user.id;
 		if (!new_category)
@@ -50,7 +51,7 @@ export default class CategoriesController {
 		}
 	}
 
-	async updateCategory(req: Request, res: Response) {
+	async updateCategory(req: Request, res: Response): ControllerResponse {
 		const updatedData = req.body;
 		const category_id = Number(req.params.id);
 		const user_id = (req as any).user.id;
@@ -73,7 +74,7 @@ export default class CategoriesController {
 		}
 	}
 
-	async deleteCategory(req: Request, res: Response) {
+	async deleteCategory(req: Request, res: Response): ControllerResponse {
 		const category_id = Number(req.params.id);
 		const user_id = (req as any).user.id;
 		if (!category_id)

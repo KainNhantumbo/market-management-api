@@ -1,8 +1,9 @@
 import Employee from '../models/Employees';
 import { Request, Response } from 'express';
+import { ControllerResponse } from '../types/controller-responses';
 
 export default class EmployeesController {
-	async getAllEmployees(req: Request, res: Response) {
+	async getAllEmployees(req: Request, res: Response): ControllerResponse {
 		const user_id = (req as any).user.id;
 		try {
 			const employees = await Employee.findAll({
@@ -14,7 +15,7 @@ export default class EmployeesController {
 		}
 	}
 
-	async getEmployee(req: Request, res: Response) {
+	async getEmployee(req: Request, res: Response): ControllerResponse {
 		const employee_id = Number(req.params.id);
 		const user_id = (req as any).user.id;
 		if (!employee_id)
@@ -33,7 +34,7 @@ export default class EmployeesController {
 		}
 	}
 
-	async createEmployee(req: Request, res: Response) {
+	async createEmployee(req: Request, res: Response): ControllerResponse {
 		const user_id = (req as any).user.id;
 		const new_employee = req.body;
 		new_employee.createdBy = user_id;
@@ -50,7 +51,7 @@ export default class EmployeesController {
 		}
 	}
 
-	async updateEmployee(req: Request, res: Response) {
+	async updateEmployee(req: Request, res: Response): ControllerResponse {
 		const updatedData = req.body;
 		const user_id = (req as any).user.id;
 		const employee_id = Number(req.params.id);
@@ -73,7 +74,7 @@ export default class EmployeesController {
 		}
 	}
 
-	async deleteEmployee(req: Request, res: Response) {
+	async deleteEmployee(req: Request, res: Response): ControllerResponse {
 		const user_id = (req as any).user.id;
 		const employee_id = Number(req.params.id);
 		if (!employee_id)
