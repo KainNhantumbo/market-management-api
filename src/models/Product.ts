@@ -1,5 +1,6 @@
 import { Model, DataTypes, UUIDV4 } from 'sequelize';
 import db from '../database/connection';
+import User from './User';
 
 class Product extends Model {}
 Product.init(
@@ -42,7 +43,7 @@ Product.init(
 		},
 		provider: {
 			type: DataTypes.STRING({ length: 250 }),
-			defaultValue: 'Not specified.'
+			defaultValue: 'Not specified.',
 		},
 		quantity: {
 			type: DataTypes.INTEGER,
@@ -56,12 +57,14 @@ Product.init(
 		lot: {
 			type: DataTypes.INTEGER,
 			allowNull: true,
-			defaultValue: 0
+			defaultValue: 0,
 		},
-		reference_id: {
-			type: DataTypes.UUID,
-			defaultValue: UUIDV4,
-			allowNull: false,
+		createdBy: {
+			type: DataTypes.INTEGER,
+			references: {
+				model: User,
+				key: 'id',
+			},
 		},
 	},
 	{
