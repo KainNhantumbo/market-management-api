@@ -1,5 +1,6 @@
 import Product from '../models/Product';
 import { Request, Response } from 'express';
+import { ControllerResponse } from '../types/controller-responses';
 
 interface QueryParams {
 	order?: string;
@@ -10,38 +11,40 @@ interface QueryParams {
 }
 
 export default class ProductsController {
-	async getProducts(req: Request, res: Response): Promise<void> {
+	async getProducts(req: Request, res: Response): ControllerResponse {
+		const user_id = (req as any).user.id;
+		const { order, offset, limit, fields, search } = req.query;
+		const query_params: QueryParams = {};
 		try {
-			const { order, offset, limit, fields, search } = req.query;
-			const query_params: QueryParams = {};
-			const products = await Product.findAll();
+			const products = await Product.findAll({ where: { createdBy: user_id } });
 			res.status(200).json({ results: products.length, data: products });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
 	}
 
-	async getProduct(req: Request, res: Response): Promise<void> {
+	async getProduct(req: Request, res: Response): ControllerResponse {
+		const product_id = Number(req.params.id);
+		const user_id = (req as any).user.id;
+		if (!product_id)
+			return res
+				.status(400)
+				.json({ message: 'Provided product ID is invalid.' });
 		try {
-			const product_id = Number(req.params.id);
-			if (!product_id) {
-				res.status(400).json({ message: 'Provided product ID is invalid.' });
-				return;
-			}
-			const product = await Product.findOne({ where: { id: product_id } });
-			if (!product) {
-				res
+			const product = await Product.findOne({
+				where: { id: product_id, createdBy: user_id },
+			});
+			if (!product)
+				return res
 					.status(404)
 					.json({ message: `Product with ${product_id} not found.` });
-				return;
-			}
 			res.status(200).json({ data: product });
 		} catch (err) {
 			res.status(500).json({ err });
 		}
 	}
 
-	async createProduct(req: Request, res: Response): Promise<void> {
+	async createProduct(req: Request, res: Response) {
 		try {
 			const new_product = req.body;
 			if (!new_product) {
@@ -55,7 +58,7 @@ export default class ProductsController {
 		}
 	}
 
-	async updateProduct(req: Request, res: Response): Promise<void> {
+	async updateProduct(req: Request, res: Response) {
 		try {
 			const product_id = Number(req.params.id);
 			const updatedProduct = req.body;
@@ -78,7 +81,7 @@ export default class ProductsController {
 		}
 	}
 
-	async deleteProduct(req: Request, res: Response): Promise<void> {
+	async deleteProduct(req: Request, res: Response) {
 		try {
 			const product_id = Number(req.params.id);
 			if (!product_id) {
