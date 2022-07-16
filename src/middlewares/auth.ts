@@ -1,17 +1,10 @@
-import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import { Response, NextFunction, Request } from 'express';
 import { ControllerResponse } from '../types/controller-responses';
+import { verifyToken } from '../utils/authentication-functions';
 
 // loads environment variables
 config();
-
-// a asynchronous function to verify integrity of the token
-const verifyToken = (token: string, secret: string) =>
-	new Promise((resolve) => {
-		const result = jwt.verify(token, secret);
-		resolve(result);
-	});
 
 // authenticates the user
 const authenticator = async (
@@ -26,7 +19,7 @@ const authenticator = async (
 	try {
 		const payload: any = await verifyToken(token, process.env.JWT_SECRET || '');
 		// inserts user id and user name into request middleware
-		(req as any).user = { id: payload.id, name: payload.name };
+		(req as any).user = { ref: payload.ref, name: payload.name };
 		next();
 	} catch (err: any) {
 		if (err.message === 'jwt malformed')

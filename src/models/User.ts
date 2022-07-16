@@ -1,5 +1,5 @@
 import db from '../database/connection';
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, UUIDV4 } from 'sequelize';
 import bcrypt from 'bcrypt';
 
 class User extends Model {}
@@ -26,14 +26,16 @@ User.init(
 		email: {
 			type: DataTypes.STRING({ length: 50 }),
 			allowNull: false,
-			unique: true,
 			validate: {
 				isEmail: { msg: 'Please provide a valid e-mail adress.' },
 			},
 		},
 		user_name: {
 			type: DataTypes.STRING({ length: 50 }),
-			unique: true,
+			unique: {
+				name: 'User name',
+				msg: 'User name already taken. Try another one.',
+			},
 			allowNull: false,
 			validate: {
 				notNull: {
@@ -101,7 +103,13 @@ User.init(
 		},
 		reference: {
 			type: DataTypes.UUID(),
+			defaultValue: UUIDV4,
 			allowNull: false,
+			validate: {
+				notNull: {
+					msg: 'Cannot save a user without an reference ID. Please provide a user ID.',
+				},
+			},
 		},
 	},
 	{
