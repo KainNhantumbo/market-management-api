@@ -99,11 +99,15 @@ User.init(
 				},
 			},
 		},
+		reference: {
+			type: DataTypes.UUID(),
+			allowNull: false,
+		},
 	},
 	{
 		sequelize: db,
-		tableName: 'User',
-		modelName: 'User',
+		tableName: 'user',
+		modelName: 'user',
 		timestamps: true,
 	}
 );
@@ -120,5 +124,5 @@ User.beforeCreate(async (user: any) => {
 
 // creates the table
 // table synchronization
-User.sync({ force: true });
+// User.sync({ force: true });
 export default User;

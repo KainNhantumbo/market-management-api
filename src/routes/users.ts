@@ -6,7 +6,7 @@ const router = Router();
 const controller = new UserController();
 
 router
-	.route('/:id')
+	.route('/')
 	.get(authenticator, controller.getUser)
 	.patch(authenticator, controller.updateUser)
 	.delete(authenticator, controller.deleteUser);

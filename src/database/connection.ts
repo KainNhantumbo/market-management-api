@@ -9,7 +9,7 @@ const db = new Sequelize({
 	host: process.env.DB_HOST,
 	username: process.env.DB_USER_NAME,
 	password: process.env.DB_PASSWORD,
-	database: 'Market Management',
+	database: 'market_management',
 	logging: false,
 });
 

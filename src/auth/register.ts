@@ -3,7 +3,6 @@ import { config } from 'dotenv';
 import User from '../models/User';
 import { Response, Request } from 'express';
 import { ControllerResponse } from '../types/controller-responses';
-
 // loads environment variables
 config();
 
@@ -36,7 +35,7 @@ const createUser = async (req: Request, res: Response): ControllerResponse => {
 		const token = await createToken({ id: user.id, name: user.user_name });
 		res
 			.status(201)
-			.json({ user: { id: user.id, name: user.user_name }, token });
+			.json({ user: { ref: user.reference, name: user.user_name }, token });
 	} catch (err) {
 		res.status(500).json({ err });
 	}

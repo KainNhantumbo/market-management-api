@@ -4,10 +4,10 @@ import { ControllerResponse } from '../types/controller-responses';
 
 export default class CategoriesController {
 	async getCategories(req: Request, res: Response): ControllerResponse {
-		const user_id = (req as any).user.id;
+		const user_ref = (req as any).user.ref;
 		try {
 			const categories = await Category.findAll({
-				where: { createdBy: user_id },
+				where: { createdBy: user_ref },
 			});
 			res.status(200).json({ results: categories.length, data: categories });
 		} catch (err) {
@@ -17,14 +17,14 @@ export default class CategoriesController {
 
 	async getCategory(req: Request, res: Response): ControllerResponse {
 		const category_id = Number(req.params.id);
-		const user_id = (req as any).user.id;
+		const user_ref = (req as any).user.ref;
 		if (!category_id)
 			return res
 				.status(400)
 				.json({ message: 'Provided category ID is invalid.' });
 		try {
 			const category = await Category.findOne({
-				where: { id: category_id, createdBy: user_id },
+				where: { id: category_id, createdBy: user_ref },
 			});
 			if (!category)
 				return res.status(404).json({
@@ -38,7 +38,7 @@ export default class CategoriesController {
 
 	async createCategory(req: Request, res: Response): ControllerResponse {
 		const new_category = req.body;
-		new_category.createdBy = (req as any).user.id;
+		new_category.createdBy = (req as any).user.ref;
 		if (!new_category)
 			return res
 				.status(400)
@@ -54,7 +54,7 @@ export default class CategoriesController {
 	async updateCategory(req: Request, res: Response): ControllerResponse {
 		const updatedData = req.body;
 		const category_id = Number(req.params.id);
-		const user_id = (req as any).user.id;
+		const user_ref = (req as any).user.ref;
 		if (!category_id)
 			return res
 				.status(400)
@@ -66,7 +66,7 @@ export default class CategoriesController {
 		try {
 			await Category.update(
 				{ ...updatedData },
-				{ where: { id: category_id, createdBy: user_id }, returning: false }
+				{ where: { id: category_id, createdBy: user_ref }, returning: false }
 			);
 			res.status(200).json({ message: 'Category updated successfuly.' });
 		} catch (err) {
@@ -76,14 +76,14 @@ export default class CategoriesController {
 
 	async deleteCategory(req: Request, res: Response): ControllerResponse {
 		const category_id = Number(req.params.id);
-		const user_id = (req as any).user.id;
+		const user_ref = (req as any).user.ref;
 		if (!category_id)
 			return res
 				.status(400)
 				.json({ message: 'Provided category ID is invalid.' });
 		try {
 			await Category.destroy({
-				where: { id: category_id, createdBy: user_id },
+				where: { id: category_id, createdBy: user_ref },
 			});
 			res.status(200).json({ message: 'Category deleted successfuly.' });
 		} catch (err) {

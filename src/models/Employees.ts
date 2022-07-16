@@ -95,8 +95,8 @@ Employee.init(
 	},
 	{
 		sequelize: db,
-		tableName: 'Employee',
-		modelName: 'Employee',
+		tableName: 'employee',
+		modelName: 'employee',
 		timestamps: true,
 	}
 );

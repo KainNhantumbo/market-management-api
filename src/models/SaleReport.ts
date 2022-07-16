@@ -36,14 +36,14 @@ SaleReport.init(
 			type: DataTypes.STRING({ length: 250 }),
 		},
 		createdBy: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.TEXT,
 			allowNull: false,
 		},
 	},
 	{
 		sequelize: db,
-		tableName: 'sale_reports',
-		modelName: 'sale_reports',
+		tableName: 'saleReports',
+		modelName: 'saleReports',
 		timestamps: true,
 	}
 );

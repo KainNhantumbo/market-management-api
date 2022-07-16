@@ -49,7 +49,7 @@ const login = async (req: Request, res: Response): ControllerResponse => {
 		const token = await createToken({ id: (user as any).id, name: user_name });
 		res
 			.status(200)
-			.json({ user: { id: (user as any).id, name: user_name }, token });
+			.json({ user: { ref: (user as any).reference, name: user_name }, token });
 	} catch (err) {
 		res.status(500).json({ err });
 	}
