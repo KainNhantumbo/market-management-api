@@ -89,7 +89,7 @@ Employee.init(
 			},
 		},
 		createdBy: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.UUID,
 			allowNull: false,
 		},
 	},

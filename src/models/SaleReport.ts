@@ -36,7 +36,7 @@ SaleReport.init(
 			type: DataTypes.STRING({ length: 250 }),
 		},
 		createdBy: {
-			type: DataTypes.TEXT,
+			type: DataTypes.UUID,
 			allowNull: false,
 		},
 	},

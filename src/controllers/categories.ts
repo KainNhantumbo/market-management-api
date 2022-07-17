@@ -10,7 +10,7 @@ export default class CategoriesController {
 				where: { createdBy: user_ref },
 			});
 			res.status(200).json({ results: categories.length, data: categories });
-		} catch (err) {
+		} catch (err: any) {
 			res.status(500).json({ err });
 		}
 	}
@@ -46,7 +46,7 @@ export default class CategoriesController {
 		try {
 			await Category.create({ ...new_category }, { returning: false });
 			res.status(201).json({ message: 'Category saved successfuly.' });
-		} catch (err) {
+		} catch (err: any) {
 			res.status(500).json({ err });
 		}
 	}

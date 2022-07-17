@@ -13,12 +13,12 @@ const createUser = async (req: Request, res: Response): ControllerResponse => {
 	if (password.length < 6)
 		return res
 			.status(400)
-			.json({ message: 'Your password must have at leat 6 characteres.' });
+			.json({ message: 'Your password must have at least 6 characteres.' });
 
 	if (user_name.length < 8)
 		return res
 			.status(400)
-			.json({ message: 'User name must have at leat 8 characteres.' });
+			.json({ message: 'User name must have at least 8 characteres.' });
 	try {
 		const user: any = await User.create({ ...req.body }, { returning: true });
 		const token = await createToken({
@@ -30,8 +30,7 @@ const createUser = async (req: Request, res: Response): ControllerResponse => {
 			.json({ user: { ref: user.reference, name: user.user_name }, token });
 	} catch (err: any) {
 		if (err.name == 'SequelizeUniqueConstraintError')
-			return res.status(400).json({ message: err.errors[0].message });
-
+			return res.status(409).json({ message: err.errors[0]?.message });
 		res.status(500).json({ err });
 	}
 };

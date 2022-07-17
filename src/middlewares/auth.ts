@@ -23,7 +23,7 @@ const authenticator = async (
 		next();
 	} catch (err: any) {
 		if (err.message === 'jwt malformed')
-			return res.status(401).json({
+			return res.status(403).json({
 				code: 'ERR_BAD_REQUEST',
 				message: 'Unauthorized: token vitality expired or malformed.',
 			});

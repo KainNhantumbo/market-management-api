@@ -12,6 +12,7 @@ import { authRoutes } from './routes/auth';
 import { salesReportRoutes } from './routes/saleReports';
 import { companyRoutes } from './routes/company';
 import { categoriesRoutes } from './routes/categories';
+import authenticator from './middlewares/auth';
 
 // loads environment variables
 config();
@@ -30,6 +31,7 @@ app.use(limiter);
 app.use(helmet());
 app.use(express.json());
 app.use('/api/v1/auth', authRoutes);
+app.use(authenticator);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productsRoutes);
 app.use('/api/v1/employees', employeesRoutes);

@@ -59,7 +59,7 @@ Product.init(
 			defaultValue: 0,
 		},
 		createdBy: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.UUID,
 			allowNull: false,
 		},
 	},
