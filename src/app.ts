@@ -26,11 +26,16 @@ const limiter = rateLimit({
 	legacyHeaders: false,
 });
 
+// server config
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
+
+// routes
 app.use('/api/v1/auth', authRoutes);
+
+// protected routes
 app.use(authenticator);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productsRoutes);
