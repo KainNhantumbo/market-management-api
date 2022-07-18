@@ -3,7 +3,7 @@ export default class BaseError extends Error {
 	public readonly statusCode: number;
 
 	constructor(message: string, statusCode: number) {
-		super(message);
+		super();
 		this.message = message;
 		this.statusCode = statusCode;
 	}

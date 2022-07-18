@@ -1,15 +1,16 @@
-import express, { Application } from 'express';
-import db from '../database/connection';
-const app: Application = express();
+import { Application } from 'express';
+import { Sequelize } from 'sequelize/types';
 
 type Port = string | number;
 
 /**
+ * @param app express.Application
  * @param PORT string | number
+ * @param db Sequelize database connection
  * @returns Promise<void>
  * @instance starts the server
  */
-const bootstrapServer = async (PORT: Port) => {
+const bootstrapServer = async (app: Application, PORT: Port, db: Sequelize) => {
 	try {
 		await db.authenticate();
 		console.log('Connection to database has been established successfully.');

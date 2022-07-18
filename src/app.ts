@@ -13,13 +13,15 @@ import { companyRoutes } from './routes/company';
 import { categoriesRoutes } from './routes/categories';
 import authenticator from './middlewares/auth';
 import bootstrapServer from './utils/server';
+import errorHandler from './errors/error-handler';
+import db from './database/connection';
 
 // loads environment variables
 config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 4000;
-const cors_options = { origin: 'http://localhost:3000' }
+const cors_options = { origin: 'http://localhost:3000' };
 const limiter = rateLimit({
 	windowMs: 10 * 60 * 1000,
 	max: 1200,
@@ -46,5 +48,8 @@ app.use('/api/v1/categories', categoriesRoutes);
 app.use('/api/v1/company', companyRoutes);
 app.use(error404Route);
 
+// error middleware
+app.use(errorHandler);
+
 // starts the server instance
-bootstrapServer(PORT);
+bootstrapServer(app, PORT, db);
