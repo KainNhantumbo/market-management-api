@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
+import { JsonWebTokenError } from 'jsonwebtoken';
 import BaseError from './base-error';
 
 const handleError = (err: any, res: Response) => {
 	const { statusCode, message } = err;
 	return res.status(statusCode).json({
-		name: 'error',
-		statusCode,
+		code: statusCode,
 		message,
 	});
 };
@@ -30,8 +30,15 @@ const errorHandler = (
 	if (error.name == 'SequelizeUniqueConstraintError')
 		return res.status(409).json({ message: error.errors[0]?.message });
 
+	if (error instanceof JsonWebTokenError)
+		return res.status(403).json({
+			status: 'Authorization Error',
+			code: 403,
+			message: 'Unauthorized: invalid token.',
+		});
+
 	res.status(500).json({
-		status: 'Server error',
+		status: 'Internal Server Error',
 		code: 500,
 		message: 'An error occured while processing your request.',
 	});
