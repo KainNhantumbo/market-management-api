@@ -22,7 +22,12 @@ const createToken = async (payload: PayloadProps) =>
 		resolve(token);
 	});
 
-// a asynchronous function to verify integrity of the token
+/**
+ * An asynchronous function to verify integrity of the token.
+ * @param token string
+ * @param secret string
+ * @returns Promise<unknown>
+ */
 const verifyToken = (token: string, secret: string) =>
 	new Promise((resolve) => {
 		const result = jwt.verify(token, secret);

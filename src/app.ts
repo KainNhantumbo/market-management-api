@@ -19,6 +19,7 @@ config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 4000;
+const cors_options = { origin: 'http://localhost:3000' }
 const limiter = rateLimit({
 	windowMs: 10 * 60 * 1000,
 	max: 1200,
@@ -27,7 +28,7 @@ const limiter = rateLimit({
 });
 
 // server config
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors(cors_options));
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
