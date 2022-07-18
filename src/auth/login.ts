@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import bcrypt from 'bcrypt';
 import User from '../models/User';
-import { Response, Request, NextFunction } from 'express';
+import { Response, Request } from 'express';
 import { ControllerResponse } from '../types/controller-responses';
 import { createToken } from '../utils/authentication-functions';
 import BaseError from '../errors/base-error';
@@ -19,15 +19,11 @@ const login = async (req: Request, res: Response): ControllerResponse => {
 		);
 	const user: any = await User.findOne({ where: { user_name: user_name } });
 	if (!user) throw new BaseError('User with provided username not found.', 404);
-	console.log(user);
 
 	// password lookup for match
 	const match = await bcrypt.compare(password, user.password);
-	if (!match) {
-		return res
-			.status(401)
-			.json({ message: 'Wrong password. Check and try again.' });
-	}
+	if (!match) throw new BaseError('Wrong password. Check and try again.', 401);
+
 	const token = await createToken({
 		reference: (user as any).reference,
 		name: user_name,

@@ -1,7 +1,7 @@
+import use from '../utils/async-wrapper';
 import createUser from '../auth/register';
 import login from '../auth/login';
 import { Router } from 'express';
-import use from '../utils/async-wrapper';
 
 const router = Router();
 router.route('/register').post(use(createUser));

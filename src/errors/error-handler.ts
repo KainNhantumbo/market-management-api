@@ -4,7 +4,7 @@ import BaseError from './base-error';
 const handleError = (err: any, res: Response) => {
 	const { statusCode, message } = err;
 	return res.status(statusCode).json({
-		status: 'error',
+		name: 'error',
 		statusCode,
 		message,
 	});
@@ -12,10 +12,10 @@ const handleError = (err: any, res: Response) => {
 
 /**
  * Error handler middleware.
- * @param error error object
+ * @param error error
  * @param req request
  * @param res response
- * @param next nextFunction
+ * @param next next middleware Function
  */
 const errorHandler = (
 	error: any,
@@ -26,6 +26,9 @@ const errorHandler = (
 	if (error instanceof BaseError) {
 		return handleError(error, res);
 	}
+
+	if (error.name == 'SequelizeUniqueConstraintError')
+		return res.status(409).json({ message: error.errors[0]?.message });
 
 	res.status(500).json({
 		status: 'Server error',
