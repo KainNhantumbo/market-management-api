@@ -1,17 +1,18 @@
 import { Router } from 'express';
 import SaleReportController from '../controllers/saleReport';
+import use from '../utils/async-wrapper';
 
 const router = Router();
 const controller = new SaleReportController();
 
 router
 	.route('/')
-	.get(controller.getSaleReports)
-	.post(controller.createSaleReport);
+	.get(use(controller.getSaleReports))
+	.post(use(controller.createSaleReport));
 
 router
 	.route('/:id')
-	.get(controller.getSaleReport)
-	.delete(controller.deleteSaleReport);
+	.get(use(controller.getSaleReport))
+	.delete(use(controller.deleteSaleReport));
 
 export { router as salesReportRoutes };

@@ -5,4 +5,4 @@ export type HandledFunction = (
 	req: Request,
 	res: Response,
 	next: NextFunction
-) => Promise<void> | ControllerResponse;
+) => ControllerResponse;

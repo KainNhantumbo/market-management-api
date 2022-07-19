@@ -23,12 +23,7 @@ const errorHandler = (
 	res: Response,
 	next: NextFunction
 ) => {
-	if (error instanceof BaseError) {
-		return handleError(error, res);
-	}
-
-	if (error.name == 'SequelizeUniqueConstraintError')
-		return res.status(409).json({ message: error.errors[0]?.message });
+	if (error instanceof BaseError) return handleError(error, res);
 
 	if (error instanceof JsonWebTokenError)
 		return res.status(403).json({
@@ -37,6 +32,10 @@ const errorHandler = (
 			message: 'Unauthorized: invalid token.',
 		});
 
+	if (error.name == 'SequelizeUniqueConstraintError')
+		return res.status(409).json({ message: error.errors[0]?.message });
+
+	console.error(error);
 	res.status(500).json({
 		status: 'Internal Server Error',
 		code: 500,
