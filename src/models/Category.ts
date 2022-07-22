@@ -7,7 +7,16 @@ Category.init(
 		name: {
 			type: DataTypes.STRING({ length: 250 }),
 			allowNull: false,
-			defaultValue: 'Acessories',
+			validate: {
+				notNull: { msg: 'Please type category name.' },
+			},
+		},
+		description: {
+			type: DataTypes.STRING({ length: 250 }),
+			allowNull: false,
+			validate: {
+				notNull: { msg: 'Please type category description.' },
+			},
 		},
 		createdBy: {
 			type: DataTypes.UUID,

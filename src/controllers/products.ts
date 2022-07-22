@@ -35,7 +35,7 @@ export default class ProductsController {
 			throw new BaseError(`Product with ID:[${product_id}], not found.`, 404);
 		res.status(200).json({ data: product });
 	}
-
+	
 	async createProduct(req: Request, res: Response): ControllerResponse {
 		const new_product = req.body;
 		new_product.createdBy = (req as any).user.ref;

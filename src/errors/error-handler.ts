@@ -35,7 +35,15 @@ const errorHandler = (
 	if (error.name == 'SequelizeUniqueConstraintError')
 		return res.status(409).json({ message: error.errors[0]?.message });
 
-	console.error(error);
+	if (error.errors[0]?.type === 'Validation error')
+		return res.status(400).json({
+			status: 'Bad Request',
+			code: 400,
+			message: error.errors[0].message,
+		});
+
+	console.log(error); // for development only
+
 	res.status(500).json({
 		status: 'Internal Server Error',
 		code: 500,

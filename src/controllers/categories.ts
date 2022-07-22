@@ -31,8 +31,13 @@ export default class CategoriesController {
 	async createCategory(req: Request, res: Response): ControllerResponse {
 		const new_category = req.body;
 		new_category.createdBy = (req as any).user.ref;
-		if (!new_category)
-			throw new BaseError('No data received to save category.', 400);
+		if (!new_category.name)
+			throw new BaseError('Please type category name first.', 400);
+		if (!new_category.description)
+			throw new BaseError(
+				'Please type category description before saving.',
+				400
+			);
 		await Category.create({ ...new_category }, { returning: false });
 		res.status(201).json({ message: 'Category saved successfuly.' });
 	}

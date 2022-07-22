@@ -15,6 +15,14 @@ export default class UserController {
 
 	async updateUser(req: Request, res: Response): ControllerResponse {
 		const updatedData = req.body;
+		if (updatedData.password) {
+			if (updatedData.password.length < 6) {
+				throw new BaseError(
+					'The new password must have at least 6 characters.',
+					400
+				);
+			}
+		}
 		const user_ref = (req as any).user.ref;
 		if (!updatedData)
 			throw new BaseError('No data received for this update operation.', 400);
