@@ -2,12 +2,29 @@ import Category from '../models/Category';
 import { Request, Response } from 'express';
 import { ControllerResponse } from '../types/controller-responses';
 import BaseError from '../errors/base-error';
+import { Op } from 'sequelize';
+
+interface QueryOptions {
+	name?: object;
+	createdBy: string;
+}
 
 export default class CategoriesController {
 	async getCategories(req: Request, res: Response): ControllerResponse {
 		const user_ref = (req as any).user.ref;
+		const { search, sort } = req.query;
+		const query: QueryOptions = { createdBy: user_ref };
+		let sortBy: any[] = [];
+
+		if (search) {
+			query.name = { [Op.iLike]: `%${search}%` };
+		}
+		if (sort) {
+			sortBy = [sort];
+		}
 		const categories = await Category.findAll({
-			where: { createdBy: user_ref },
+			where: { ...query },
+			order: sortBy.length !== 0 ? sortBy : [['updatedAt', 'DESC']],
 		});
 		res.status(200).json({ results: categories.length, data: categories });
 	}
