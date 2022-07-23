@@ -12,19 +12,20 @@ interface QueryOptions {
 export default class CategoriesController {
 	async getCategories(req: Request, res: Response): ControllerResponse {
 		const user_ref = (req as any).user.ref;
-		const { search, sort } = req.query;
 		const query: QueryOptions = { createdBy: user_ref };
-		let sortBy: any[] = [];
+		const { search, sort } = req.query;
+		const sortBy: any[] = [];
 
 		if (search) {
 			query.name = { [Op.iLike]: `%${search}%` };
 		}
 		if (sort) {
-			sortBy = [sort];
+			const sortArr = (sort as string).split(',');
+			sortBy.push(sortArr);
 		}
 		const categories = await Category.findAll({
 			where: { ...query },
-			order: sortBy.length !== 0 ? sortBy : [['updatedAt', 'DESC']],
+			order: sortBy.length !== 0 ? sortBy : [['name', 'ASC']],
 		});
 		res.status(200).json({ results: categories.length, data: categories });
 	}
@@ -60,15 +61,20 @@ export default class CategoriesController {
 	}
 
 	async updateCategory(req: Request, res: Response): ControllerResponse {
-		const updatedData = req.body;
+		const { name, description } = req.body;
 		const category_id = Number.parseInt(req.params.id);
 		const user_ref = (req as any).user.ref;
 		if (!category_id)
 			throw new BaseError('Provided category ID is invalid.', 400);
-		if (!updatedData)
-			throw new BaseError('No data received for update operation.', 400);
+		if (!name)
+			throw new BaseError('Category name must be filled before update', 400);
+		if (!description)
+			throw new BaseError(
+				'Category description must be filled before update.',
+				400
+			);
 		await Category.update(
-			{ ...updatedData },
+			{ name, description },
 			{ where: { id: category_id, createdBy: user_ref }, returning: false }
 		);
 		res.status(200).json({ message: 'Category updated successfuly.' });
